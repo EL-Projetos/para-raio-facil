@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-kspdtfnPjN+5lymyvIe8TdX0kBeBhNvtg4dN3nVECm0=' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src https://*.supabase.co wss://*.supabase.co; worker-src blob:; base-uri 'none'; form-action 'none'; object-src 'none'; manifest-src 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-1FQMTd3l6dDIWbMeqF5HT030RxhoSPocfvPefQprWlk=' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src https://*.supabase.co wss://*.supabase.co; worker-src blob:; base-uri 'none'; form-action 'none'; object-src 'none'; manifest-src 'self'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex,nofollow">
 <title>Para-Raio Fácil</title>
@@ -408,7 +408,7 @@ async function entrar(sessao){
   try{if(localStorage.getItem("prfDono")!==uid){localStorage.removeItem("prfState");localStorage.removeItem("prfAnalise");localStorage.setItem("prfDono",uid);}}catch(e){}
   sb.rpc("registrar_acesso").then(()=>{},()=>{});
   q("#gCarregando").textContent="Carregando o aplicativo…";
-  const {data:arq,error:e2}=await sb.storage.from("app").download("app.js");
+  const {data:arq,error:e2}=await sb.storage.from("app").download("app.js?v="+Date.now());
   if(e2||!arq){
     if(perfil.papel==="admin")return tela("publicar");
     return erro("O aplicativo está indisponível no momento. Avise o administrador.");}
