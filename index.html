@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-ookewAP25FvID6ks6JeqgbwQCIGaAO5TsuXc4a9EFjU=' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src https://*.supabase.co wss://*.supabase.co; worker-src blob:; base-uri 'none'; form-action 'none'; object-src 'none'; manifest-src 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-Xi2/fD9AlTk5aaX5ybaGjlQbj+pMptlLJPs12ert03o=' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src https://*.supabase.co wss://*.supabase.co; worker-src blob:; base-uri 'none'; form-action 'none'; object-src 'none'; manifest-src 'self'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex,nofollow">
 <title>Para-Raio Fácil</title>
@@ -125,6 +125,43 @@ td.n{font-family:var(--f-mono);text-align:right;font-variant-numeric:tabular-num
 footer{color:var(--muted);font-size:12.5px;padding-block:20px 32px;border-top:1px solid var(--line)}
 @media (prefers-reduced-motion:no-preference){.btn,nav.tabs button{transition:background .15s,border-color .15s}}
 
+
+/* ---- página de apresentação (antes do login) ---- */
+#gate{position:fixed;inset:0;z-index:50;background:var(--navy);overflow:auto}
+.g-hero{min-height:100%;display:grid;place-items:center;padding:24px 16px}
+.g-in{display:grid;gap:36px;width:min(1120px,100%);justify-items:center}
+.g-card{width:min(400px,100%);gap:14px}
+#gate.is-land .g-hero{min-height:auto;padding:56px 16px 64px;background:radial-gradient(900px 420px at 15% 0%,rgba(245,184,0,.16),transparent 60%),var(--navy)}
+#gate.is-land .g-in{grid-template-columns:minmax(0,1.25fr) minmax(0,400px);align-items:center;justify-items:stretch}
+#gate.is-land .g-card{justify-self:end}
+@media (max-width:880px){#gate.is-land .g-in{grid-template-columns:minmax(0,1fr)}#gate.is-land .g-card{justify-self:center}}
+.g-land{color:#fff;display:grid;gap:18px}
+.g-land .brand{color:#fff;font-size:22px}
+.g-land h1{font-size:clamp(32px,5vw,52px);line-height:1.05;font-weight:800;letter-spacing:.005em}
+.g-land h1 em{font-style:normal;color:var(--volt)}
+.g-land .lead{color:#c9d6e5;font-size:17px;max-width:56ch}
+.g-chips{display:flex;flex-wrap:wrap;gap:8px}
+.g-chips span{border:1px solid rgba(255,255,255,.22);color:#e6ecf3;border-radius:99px;padding:5px 12px;font-size:13px;font-weight:600}
+.g-mais{background:var(--bg);color:var(--ink)}
+.g-sec{width:min(1120px,100%);margin:0 auto;padding:48px 16px;display:grid;gap:22px}
+.g-sec>h2{font-size:28px}
+.g-sec>.lead{margin-top:-10px}
+.g-feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.g-feat .card{gap:8px;align-content:start}
+.g-feat .ico{width:38px;height:38px;border-radius:9px;display:grid;place-items:center;background:var(--volt);color:#1b1400;font-weight:800;font-family:var(--f-display);font-size:18px}
+.g-feat p{color:var(--muted);font-size:14.5px}
+.g-shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.g-shots figure{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);display:grid}
+.g-shots img{display:block;width:100%;height:220px;object-fit:cover;object-position:top left;background:#fff}
+.g-shots figcaption{padding:12px 14px;font-size:14px;color:var(--muted)}
+.g-shots figcaption b{display:block;color:var(--ink);font-family:var(--f-display);font-size:17px;letter-spacing:.02em}
+.g-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;counter-reset:gs}
+.g-steps div{border-left:3px solid var(--volt);padding:4px 0 4px 14px;display:grid;gap:4px}
+.g-steps b{font-family:var(--f-display);font-size:19px}
+.g-steps b::before{counter-increment:gs;content:counter(gs) ". ";color:var(--copper)}
+.g-steps p{color:var(--muted);font-size:14.5px}
+.g-foot{border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+.g-foot .g-sec{padding-block:24px 36px;gap:8px}
 /* ---- acesso: usuário logado e status de gravação ---- */
 .userbox{margin-left:auto;position:relative}
 .usermenu summary{list-style:none;display:flex;align-items:center;gap:8px;cursor:pointer;color:#fff;font-weight:600;font-size:14px;padding:4px 6px;border-radius:8px}
@@ -138,8 +175,15 @@ footer{color:var(--muted);font-size:12.5px;padding-block:20px 32px;border-top:1p
 @media (max-width:640px){.usermenu .uname{display:none}}
 </style>
 
-<div id="gate" style="position:fixed;inset:0;z-index:50;background:var(--navy);display:grid;place-items:center;padding:16px;overflow:auto">
-  <div class="card" style="width:min(400px,100%);gap:14px">
+<div id="gate">
+ <div class="g-hero"><div class="g-in">
+  <div class="g-land" id="gLand" hidden>
+    <div class="brand"><svg width="26" height="30" viewBox="0 0 30 34" aria-hidden="true"><path d="M17 1 3 20h10l-3 13 17-21H16l4-11z" fill="#f5b800" stroke="#1b1400" stroke-width="1.2" stroke-linejoin="round"/></svg>PARA-RAIO FÁCIL</div>
+    <h1>Análise de risco e projeto de SPDA <em>pela NBR 5419:2026</em>, em minutos.</h1>
+    <p class="lead">Preencha os dados do prédio uma vez e receba o nível de proteção, o SPDA em 3D pela esfera rolante, a planta e os cortes cotados em DXF, o relatório Word com gráficos, a lista de materiais e os detalhes de instalação.</p>
+    <div class="g-chips"><span>NBR 5419-2 · R1, R3 e F</span><span>NG dos 5 570 municípios</span><span>Esfera rolante 3D</span><span>DXF sobre a planta do arquiteto</span><span>Relatório Word</span><span>DPS coordenados</span></div>
+  </div>
+  <div class="card g-card">
     <div class="brand" style="color:var(--ink)"><svg width="26" height="30" viewBox="0 0 30 34" aria-hidden="true"><path d="M17 1 3 20h10l-3 13 17-21H16l4-11z" fill="#f5b800" stroke="#1b1400" stroke-width="1.2" stroke-linejoin="round"/></svg>PARA-RAIO FÁCIL</div>
 
     <div data-tela="carregando"><p class="muted" id="gCarregando">Carregando…</p></div>
@@ -175,6 +219,40 @@ footer{color:var(--muted);font-size:12.5px;padding-block:20px 32px;border-top:1p
       <button class="btn sm" type="button" data-sair>Voltar ao login</button>
     </div>
   </div>
+ </div></div>
+ <div class="g-mais" id="gMais" hidden>
+  <section class="g-sec">
+    <h2>Tudo o que o projeto de SPDA precisa, a partir dos mesmos dados</h2>
+    <div class="g-feat">
+      <div class="card"><span class="ico">R</span><h3>Análise de risco</h3><p>R1, R3 e frequência de danos F pela ABNT NBR 5419-2:2026, com o NG da Tabela F.1 e um guia com exemplo em cada campo.</p></div>
+      <div class="card"><span class="ico">3D</span><h3>SPDA em 3D</h3><p>Captores, malha ou cabo nas beiradas, descidas e anel de aterramento, verificados pela esfera rolante com a envoltória de proteção.</p></div>
+      <div class="card"><span class="ico">DXF</span><h3>Planta e cortes cotados</h3><p>Planta de cobertura e aterramento com dois cortes cotados, layers separados e carimbo. Pode ser desenhada por cima do DXF do arquiteto.</p></div>
+      <div class="card"><span class="ico">W</span><h3>Relatório Word</h3><p>Memorial completo com gráficos dos riscos, vistas 3D, quantitativos e conclusão com as referências da norma.</p></div>
+      <div class="card"><span class="ico">≡</span><h3>Materiais e detalhes</h3><p>Lista de materiais em planilha e os detalhes de instalação que devem ir para a prancha, com o item da NBR 5419-3 e 5419-4.</p></div>
+      <div class="card"><span class="ico">⚡</span><h3>DPS</h3><p>Especificação de DPS classe I, II e III na entrada, nos quadros e junto aos equipamentos, conforme o resultado da análise.</p></div>
+    </div>
+  </section>
+  <section class="g-sec">
+    <h2>Veja o que sai do Para-Raio Fácil</h2>
+    <div class="g-shots">
+      <figure><img src="img/spda-3d.jpg" alt="Galpão em 3D com captores, descidas e a envoltória da esfera rolante" loading="lazy"><figcaption><b>Esfera rolante em 3D</b>Captores e descidas posicionados e a cobertura verificada.</figcaption></figure>
+      <figure><img src="img/planta-dxf.jpg" alt="Planta de cobertura e cortes cotados do SPDA em DXF" loading="lazy"><figcaption><b>Planta e cortes em DXF</b>Cotados, em layers, prontos para a prancha.</figcaption></figure>
+      <figure><img src="img/grafico-risco.jpg" alt="Gráfico das componentes de risco R1 comparadas ao risco tolerável" loading="lazy"><figcaption><b>Relatório com gráficos</b>Componentes do risco comparadas ao valor tolerável.</figcaption></figure>
+    </div>
+  </section>
+  <section class="g-sec">
+    <h2>Como funciona</h2>
+    <div class="g-steps">
+      <div><b>Dados do prédio</b><p>Medidas, cidade, uso, pessoas e cabos que chegam – ou anexe a planta de cobertura em DXF.</p></div>
+      <div><b>Resultado na hora</b><p>Precisa ou não de SPDA, nível de proteção e DPS, com avisos para dados incoerentes.</p></div>
+      <div><b>Arquivos prontos</b><p>Relatório Word, DXF da planta e cortes, lista de materiais e detalhes de instalação.</p></div>
+    </div>
+  </section>
+  <footer class="g-foot"><div class="g-sec">
+    <p>Acesso restrito a usuários cadastrados. Para ter acesso, fale com o administrador.</p>
+    <p>A análise de risco e o projeto são de responsabilidade do engenheiro projetista, com ART. O Para-Raio Fácil é uma ferramenta de apoio ao cálculo pela ABNT NBR 5419:2026.</p>
+  </div></footer>
+ </div>
 </div>
 <header class="top">
   <div class="wrap">
@@ -341,7 +419,7 @@ footer{color:var(--muted);font-size:12.5px;padding-block:20px 32px;border-top:1p
 "use strict";
 const C=window.PRF_CONFIG||{};
 const q=s=>document.querySelector(s);
-const tela=n=>{document.querySelectorAll("#gate [data-tela]").forEach(e=>e.hidden=e.dataset.tela!==n);q("#gate").hidden=false;};
+const tela=n=>{document.querySelectorAll("#gate [data-tela]").forEach(e=>e.hidden=e.dataset.tela!==n);const g=q("#gate");g.hidden=false;const land=n==="login";g.classList.toggle("is-land",land);q("#gLand").hidden=!land;q("#gMais").hidden=!land;};
 const erro=t=>{q("#gErro").textContent=t;tela("erro");};
 if(!C.SUPABASE_URL||!C.SUPABASE_ANON_KEY||/COLE/.test(C.SUPABASE_URL+C.SUPABASE_ANON_KEY)){erro("O site ainda não foi configurado: preencha o arquivo config.js com os dados do Supabase.");return;}
 if(!window.supabase||!window.supabase.createClient){erro("Não foi possível carregar o módulo de acesso. Recarregue a página.");return;}
@@ -436,7 +514,7 @@ sb.auth.onAuthStateChange((ev)=>{if(ev==="SIGNED_OUT"&&PRF.perfil){limparLocal()
   tela("login");
   if(motivo==="inatividade")q("#gMsg").textContent="Sessão encerrada por inatividade.";
   if(motivo)history.replaceState(null,"",location.pathname);
-  q("#gUser").focus();
+  if(innerWidth>880)q("#gUser").focus();
 })();
 })();
 </script>
