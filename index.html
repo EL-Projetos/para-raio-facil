@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-1FQMTd3l6dDIWbMeqF5HT030RxhoSPocfvPefQprWlk=' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src https://*.supabase.co wss://*.supabase.co; worker-src blob:; base-uri 'none'; form-action 'none'; object-src 'none'; manifest-src 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-ookewAP25FvID6ks6JeqgbwQCIGaAO5TsuXc4a9EFjU=' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src https://*.supabase.co wss://*.supabase.co; worker-src blob:; base-uri 'none'; form-action 'none'; object-src 'none'; manifest-src 'self'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex,nofollow">
 <title>Para-Raio Fácil</title>
@@ -408,14 +408,19 @@ async function entrar(sessao){
   try{if(localStorage.getItem("prfDono")!==uid){localStorage.removeItem("prfState");localStorage.removeItem("prfAnalise");localStorage.setItem("prfDono",uid);}}catch(e){}
   sb.rpc("registrar_acesso").then(()=>{},()=>{});
   q("#gCarregando").textContent="Carregando o aplicativo…";
-  const {data:arq,error:e2}=await sb.storage.from("app").download("app.js?v="+Date.now());
-  if(e2||!arq){
-    if(perfil.papel==="admin")return tela("publicar");
-    return erro("O aplicativo está indisponível no momento. Avise o administrador.");}
-  const url=URL.createObjectURL(new Blob([await arq.text()],{type:"text/javascript"}));
+  /* modo teste: o administrador pode abrir uma versão nova só para ele antes de publicar */
+  let teste=null;if(perfil.papel==="admin"){try{teste=sessionStorage.getItem("prfTeste");}catch(e){}}
+  let codigo;
+  if(teste){window.__PRF_TESTE=1;codigo=teste;}
+  else{const {data:arq,error:e2}=await sb.storage.from("app").download("app.js?v="+Date.now());
+    if(e2||!arq){
+      if(perfil.papel==="admin")return tela("publicar");
+      return erro("O aplicativo está indisponível no momento. Avise o administrador.");}
+    codigo=await arq.text();}
+  const url=URL.createObjectURL(new Blob([codigo],{type:"text/javascript"}));
   const s=document.createElement("script");s.src=url;
   s.onload=()=>{URL.revokeObjectURL(url);q("#gate").hidden=true;};
-  s.onerror=()=>erro("Falha ao iniciar o aplicativo.");
+  s.onerror=()=>{if(teste){try{sessionStorage.removeItem("prfTeste");}catch(e){}}erro("Falha ao iniciar o aplicativo.");};
   document.body.appendChild(s);
 }
 
