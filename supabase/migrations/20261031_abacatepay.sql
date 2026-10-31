@@ -93,6 +93,11 @@ begin
   return jsonb_build_object('ok',true,'saldo',v_pts);
 end $$;
 
+-- 6) Permissões das tabelas (este projeto não libera tabelas novas automaticamente)
+grant select, insert, update, delete on public.combos to authenticated;
+grant select on public.compras, public.pagamento_eventos to authenticated;
+grant all on public.combos, public.compras, public.pagamento_eventos to service_role;
+
 revoke all on function public.creditar_compra(uuid,text,int) from public, anon, authenticated;
 revoke all on function public.estornar_compra(uuid) from public, anon, authenticated;
 grant execute on function public.creditar_compra(uuid,text,int) to service_role;
